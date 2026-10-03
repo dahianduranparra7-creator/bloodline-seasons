@@ -7,7 +7,7 @@ const client = new Client({
   ]
 });
 
-// 🎨 EMOJIS DE CADA TEMPORADA
+// 🎨 EMOJIS
 const temporadas = {
   halloween: [
     "🎃","👻","🦇","🕷️","🕸️","🧙","🧙‍♀️","🧛","🧛‍♀️","🧟","🧟‍♀️",
@@ -84,17 +84,17 @@ function fechaPascua(year) {
   const k = c % 4;
   const l = (32 + 2 * e + 2 * i - h - k) % 7;
   const m = Math.floor((a + 11 * h + 22 * l) / 451);
+
   const mes = Math.floor((h + l - 7 * m + 114) / 31);
   const dia = ((h + l - 7 * m + 114) % 31) + 1;
 
   return new Date(year, mes - 1, dia);
 }
 
-// 📅 TEMPORADA AUTOMÁTICA
+// 📅 SABER QUÉ TEMPORADA ES
 function obtenerTemporada() {
   const ahora = new Date();
 
-  // Usar la fecha de República Dominicana (UTC-4)
   const fechaRD = new Date(
     ahora.toLocaleString("en-US", {
       timeZone: "America/Santo_Domingo"
@@ -103,10 +103,10 @@ function obtenerTemporada() {
 
   const mes = fechaRD.getMonth() + 1;
   const dia = fechaRD.getDate();
-  const year = fechaRD.getFullYear();
+  const año = fechaRD.getFullYear();
 
   // 🎆 Año Nuevo
-  if (mes === 1 && dia >= 1 && dia <= 7) {
+  if (mes === 1 && dia <= 7) {
     return "anoNuevo";
   }
 
@@ -120,8 +120,8 @@ function obtenerTemporada() {
     return "sanPatricio";
   }
 
-  // 🐰 Pascua: desde 7 días antes hasta Pascua
-  const pascua = fechaPascua(year);
+  // 🐰 Pascua
+  const pascua = fechaPascua(año);
   const inicioPascua = new Date(pascua);
   inicioPascua.setDate(inicioPascua.getDate() - 7);
 
@@ -133,7 +133,8 @@ function obtenerTemporada() {
   if (
     (mes === 3 && dia >= 18) ||
     mes === 4 ||
-    mes === 5
+    mes === 5 ||
+    mes === 9
   ) {
     return "primavera";
   }
@@ -141,11 +142,6 @@ function obtenerTemporada() {
   // ☀️ Verano
   if (mes >= 6 && mes <= 8) {
     return "verano";
-  }
-
-  // 🌸 Septiembre
-  if (mes === 9) {
-    return "primavera";
   }
 
   // 🎃 Halloween
@@ -162,17 +158,17 @@ function obtenerTemporada() {
   return "invierno";
 }
 
-// 🎲 Elegir emoji al azar
+// 🎲 EMOJI ALEATORIO
 function emojiAleatorio(temporada) {
   const lista = temporadas[temporada];
 
   return lista[Math.floor(Math.random() * lista.length)];
 }
 
-// 📋 Todos los emojis que el bot utiliza
+// 📋 TODOS LOS EMOJIS
 const todosLosEmojis = Object.values(temporadas).flat();
 
-// 🏷️ Quitar emoji anterior
+// 🏷️ QUITAR EMOJI ANTERIOR
 function quitarEmojiAnterior(nombre) {
   const partes = nombre.trim().split(" ");
 
@@ -183,19 +179,17 @@ function quitarEmojiAnterior(nombre) {
   return partes.join(" ").trim();
 }
 
-// 🏷️ Poner emoji al miembro
+// 🏷️ CAMBIAR APODO
 async function ponerEmoji(member, temporada) {
   try {
-    // No modificar bots
     if (member.user.bot) return;
 
-    // El propietario del servidor no puede ser modificado por el bot
+    // 👑 No tocar al propietario
     if (member.id === member.guild.ownerId) {
-      console.log(`⚠️ ${member.user.username} es el propietario y no puedo cambiar su apodo.`);
+      console.log(`⚠️ ${member.user.username} es el propietario.`);
       return;
     }
 
-    // Comprobar que el bot puede administrar a este miembro
     if (!member.manageable) {
       console.log(`⚠️ No puedo modificar a ${member.user.username}.`);
       return;
@@ -203,10 +197,8 @@ async function ponerEmoji(member, temporada) {
 
     const nombreActual = member.nickname || member.user.username;
 
-    // Quitar emoji de temporada anterior
     const nombreLimpio = quitarEmojiAnterior(nombreActual);
 
-    // Elegir nuevo emoji
     const emoji = emojiAleatorio(temporada);
 
     const nuevoApodo = `${emoji} ${nombreLimpio}`;
@@ -214,6 +206,7 @@ async function ponerEmoji(member, temporada) {
     await member.setNickname(nuevoApodo);
 
     console.log(`✅ ${nombreLimpio} recibió ${emoji}`);
+
   } catch (error) {
     console.error(
       `❌ No pude cambiar el apodo de ${member.user.username}:`,
@@ -222,9 +215,9 @@ async function ponerEmoji(member, temporada) {
   }
 }
 
-// 👥 Repartir emojis a todos los miembros
+// 👥 REPARTIR A TODOS
 async function repartirTemporada(guild, temporada) {
-  console.log(`👥 Revisando miembros de ${guild.name}...`);
+  console.log(`👥 Repartiendo ${temporada} en ${guild.name}...`);
 
   try {
     const miembros = await guild.members.fetch();
@@ -233,30 +226,58 @@ async function repartirTemporada(guild, temporada) {
       await ponerEmoji(member, temporada);
     }
 
-    console.log(`✅ Miembros de ${guild.name} revisados.`);
+    console.log(`✅ Reparto terminado en ${guild.name}.`);
+
   } catch (error) {
-    console.error(`❌ Error revisando ${guild.name}:`, error);
+    console.error(`❌ Error repartiendo emojis:`, error);
   }
 }
 
-// 🤖 Bot conectado
+// 🎯 TEMPORADA ANTERIOR
+let temporadaActual = null;
+
+// 🤖 BOT CONECTADO
 client.once("ready", async () => {
+
   console.log(`🩸 Bloodline Seasons conectado como ${client.user.tag}`);
 
-  const temporada = obtenerTemporada();
+  temporadaActual = obtenerTemporada();
 
-  console.log(`🎨 Temporada automática: ${temporada}`);
+  console.log(`🎨 Temporada actual: ${temporadaActual}`);
 
   for (const guild of client.guilds.cache.values()) {
-    await repartirTemporada(guild, temporada);
+    await repartirTemporada(guild, temporadaActual);
   }
+
+  // ⏰ Revisar la fecha cada 10 minutos
+  setInterval(async () => {
+
+    const nuevaTemporada = obtenerTemporada();
+
+    if (nuevaTemporada !== temporadaActual) {
+
+      console.log(
+        `🔄 Cambio de temporada: ${temporadaActual} → ${nuevaTemporada}`
+      );
+
+      temporadaActual = nuevaTemporada;
+
+      for (const guild of client.guilds.cache.values()) {
+        await repartirTemporada(guild, nuevaTemporada);
+      }
+
+    }
+
+  }, 10 * 60 * 1000);
 });
 
-// 🆕 Cuando entra un miembro nuevo
+// 🆕 NUEVO MIEMBRO
 client.on("guildMemberAdd", async (member) => {
+
   const temporada = obtenerTemporada();
 
   await ponerEmoji(member, temporada);
+
 });
 
 client.login(process.env.DISCORD_TOKEN);
