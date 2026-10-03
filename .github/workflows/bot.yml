@@ -48,5 +48,8 @@ jobs:
             echo "No hay cambios en la memoria."
           else
             git commit -m "Actualizar memoria de temporada"
-            git push
+
+            git pull --rebase origin main
+
+            git push origin main
           fi
