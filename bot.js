@@ -48,7 +48,7 @@ function guardarMemoria() {
 }
 
 // ==========================================
-// 🎨 EMOJIS
+// 🎨 EMOJIS DE CADA TEMPORADA
 // ==========================================
 
 const temporadas = {
@@ -140,7 +140,7 @@ function fechaPascua(year) {
 }
 
 // ==========================================
-// 📅 OBTENER TEMPORADA
+// 📅 OBTENER TEMPORADA ACTUAL
 // ==========================================
 
 function obtenerTemporada() {
@@ -250,14 +250,14 @@ function emojiAleatorio(temporada) {
 }
 
 // ==========================================
-// 🧹 TODOS LOS EMOJIS DEL BOT
+// 🧹 TODOS LOS EMOJIS
 // ==========================================
 
 const todosLosEmojis =
   Object.values(temporadas).flat();
 
 // ==========================================
-// 🧹 QUITAR EMOJI DEL BOT
+// 🧹 QUITAR EMOJI ANTERIOR
 // ==========================================
 
 function quitarEmojiAnterior(nombre) {
@@ -285,22 +285,28 @@ async function ponerEmoji(
   temporada
 ) {
 
+  // 🤖 No modificar bots
   if (member.user.bot) return;
 
-  // 👑 NO MODIFICAR AL DUEÑO
+  // 👑 No modificar al dueño
   if (
     member.guild.ownerId === member.id
   ) {
+
     console.log(
       `⚠️ ${member.user.username} es el propietario.`
     );
+
     return;
   }
 
+  // 🔐 Comprobar jerarquía
   if (!member.manageable) {
+
     console.log(
       `⚠️ No puedo modificar a ${member.user.username}.`
     );
+
     return;
   }
 
@@ -308,12 +314,15 @@ async function ponerEmoji(
     member.nickname ||
     member.user.username;
 
+  // 🧹 Quitar cualquier emoji anterior del bot
   const nombreLimpio =
     quitarEmojiAnterior(nombreActual);
 
+  // 🎲 Elegir emoji
   const emoji =
     emojiAleatorio(temporada);
 
+  // ✨ Nuevo nombre
   const nuevoNombre =
     `${emoji} ${nombreLimpio}`;
 
@@ -384,14 +393,17 @@ async function limpiarEmojis(guild) {
     const member of miembros.values()
   ) {
 
+    // 🤖 No modificar bots
     if (member.user.bot) continue;
 
+    // 👑 No modificar dueño
     if (
       member.guild.ownerId === member.id
     ) {
       continue;
     }
 
+    // 🔐 Comprobar jerarquía
     if (!member.manageable) {
       continue;
     }
@@ -403,7 +415,7 @@ async function limpiarEmojis(guild) {
     const nombreLimpio =
       quitarEmojiAnterior(nombreActual);
 
-    // No tenía emoji del bot
+    // No tenía emoji
     if (
       nombreActual === nombreLimpio
     ) {
@@ -435,7 +447,7 @@ async function limpiarEmojis(guild) {
 }
 
 // ==========================================
-// 🚀 EJECUTAR UNA SOLA VEZ
+// 🚀 EJECUTAR
 // ==========================================
 
 client.once("ready", async () => {
@@ -458,7 +470,7 @@ client.once("ready", async () => {
   if (!memoria.temporada) {
 
     console.log(
-      `🆕 Primera ejecución.`
+      "🆕 Primera ejecución."
     );
 
     memoria.temporada =
@@ -486,7 +498,7 @@ client.once("ready", async () => {
   }
 
   // ========================================
-  // 🔄 CAMBIÓ LA TEMPORADA
+  // 🔄 CAMBIO DE TEMPORADA
   // ========================================
 
   if (
@@ -498,7 +510,7 @@ client.once("ready", async () => {
       `🔄 Cambio de ${memoria.temporada} → ${temporadaActual}`
     );
 
-    // 🧹 QUITAR TEMPORADA ANTERIOR
+    // 🧹 Limpiar temporada anterior
     for (
       const guild of client.guilds.cache.values()
     ) {
@@ -506,7 +518,7 @@ client.once("ready", async () => {
       await limpiarEmojis(guild);
     }
 
-    // 💾 GUARDAR NUEVA TEMPORADA
+    // 💾 Guardar nueva temporada
     memoria.temporada =
       temporadaActual;
 
@@ -514,7 +526,7 @@ client.once("ready", async () => {
 
     guardarMemoria();
 
-    // 🎨 REPARTIR NUEVA TEMPORADA
+    // 🎨 Repartir nueva temporada
     for (
       const guild of client.guilds.cache.values()
     ) {
@@ -546,35 +558,6 @@ client.once("ready", async () => {
 
   process.exit(0);
 });
-
-// ==========================================
-// 👤 NUEVOS MIEMBROS
-// ==========================================
-
-client.on(
-  "guildMemberAdd",
-  async (member) => {
-
-    const temporadaActual =
-      obtenerTemporada();
-
-    if (
-      memoria.temporada ===
-      temporadaActual &&
-      memoria.activa
-    ) {
-
-      console.log(
-        `👤 ${member.user.username} entró durante ${temporadaActual}.`
-      );
-
-      await ponerEmoji(
-        member,
-        temporadaActual
-      );
-    }
-  }
-);
 
 // ==========================================
 // 🔐 LOGIN
