@@ -5,9 +5,9 @@ const {
 
 const fs = require("fs");
 
-// ===============================
+// ==========================================
 // 🤖 CLIENTE
-// ===============================
+// ==========================================
 
 const client = new Client({
   intents: [
@@ -16,9 +16,9 @@ const client = new Client({
   ]
 });
 
-// ===============================
-// 💾 ARCHIVO DE MEMORIA
-// ===============================
+// ==========================================
+// 💾 MEMORIA
+// ==========================================
 
 const archivoMemoria = "./temporada.json";
 
@@ -47,72 +47,72 @@ function guardarMemoria() {
   );
 }
 
-// ===============================
+// ==========================================
 // 🎨 EMOJIS
-// ===============================
+// ==========================================
 
 const temporadas = {
 
   halloween: [
-    "🎃","👻","🦇","🕷️","🕸️","🧙","🧙‍♀️",
-    "🧛","🧛‍♀️","🧟","🧟‍♀️","🧞","🧞‍♀️",
-    "🤡","😈","👿","💀","☠️","🐈‍⬛","🐺",
-    "🌙","🪦","🔮","🧪","🕯️","🍬","🍭",
-    "🍫","🖤","🧡"
+    "🎃", "👻", "🦇", "🕷️", "🕸️", "🧙", "🧙‍♀️",
+    "🧛", "🧛‍♀️", "🧟", "🧟‍♀️", "🧞", "🧞‍♀️",
+    "🤡", "😈", "👿", "💀", "☠️", "🐈‍⬛", "🐺",
+    "🌙", "🪦", "🔮", "🧪", "🕯️", "🍬", "🍭",
+    "🍫", "🖤", "🧡"
   ],
 
   navidad: [
-    "🎄","🎅","🤶","🧑‍🎄","⛄","☃️","❄️",
-    "🎁","🎀","🔔","🦌","🛷","🧦","🕯️",
-    "✨","🌟","⭐","🌲","🧤","🧣","🍪",
-    "🥛","🍫","🏠","❤️","💚","🎶","🔴","🟢"
+    "🎄", "🎅", "🤶", "🧑‍🎄", "⛄", "☃️", "❄️",
+    "🎁", "🎀", "🔔", "🦌", "🛷", "🧦", "🕯️",
+    "✨", "🌟", "⭐", "🌲", "🧤", "🧣", "🍪",
+    "🥛", "🍫", "🏠", "❤️", "💚", "🎶", "🔴", "🟢"
   ],
 
   sanValentin: [
-    "❤️","🩷","🧡","💛","💚","💙","💜","🖤",
-    "🤍","🤎","💕","💞","💓","💗","💖","💘",
-    "💝","💟","❣️","💌","🥰","😍","😘","🌹",
-    "🌷","💐","🎀","🫶","💋"
+    "❤️", "🩷", "🧡", "💛", "💚", "💙", "💜", "🖤",
+    "🤍", "🤎", "💕", "💞", "💓", "💗", "💖", "💘",
+    "💝", "💟", "❣️", "💌", "🥰", "😍", "😘", "🌹",
+    "🌷", "💐", "🎀", "🫶", "💋"
   ],
 
   verano: [
-    "☀️","🌞","🌴","🌊","🏖️","🏝️","🏄",
-    "🏄‍♀️","🏄‍♂️","🏊","🏊‍♀️","🏊‍♂️","🤿",
-    "🩱","🩳","🩴","🕶️","👒","🧢","🏐",
-    "⚽","🐚","🐠","🐬","🦀","🦑","🍉",
-    "🍍","🥥","🍦","🧃","🥤"
+    "☀️", "🌞", "🌴", "🌊", "🏖️", "🏝️", "🏄",
+    "🏄‍♀️", "🏄‍♂️", "🏊", "🏊‍♀️", "🏊‍♂️", "🤿",
+    "🩱", "🩳", "🩴", "🕶️", "👒", "🧢", "🏐",
+    "⚽", "🐚", "🐠", "🐬", "🦀", "🦑", "🍉",
+    "🍍", "🥥", "🍦", "🧃", "🥤"
   ],
 
   primavera: [
-    "🌸","🌷","🌹","🌺","🌻","🌼","🪻","🪷",
-    "💐","🌱","🌿","🍀","☘️","🦋","🐝",
-    "🐞","🐛","🐌","🐰","🐣","🐥","🌈",
-    "☀️","🌤️","🌦️","💚","💛"
+    "🌸", "🌷", "🌹", "🌺", "🌻", "🌼", "🪻", "🪷",
+    "💐", "🌱", "🌿", "🍀", "☘️", "🦋", "🐝",
+    "🐞", "🐛", "🐌", "🐰", "🐣", "🐥", "🌈",
+    "☀️", "🌤️", "🌦️", "💚", "💛"
   ],
 
   sanPatricio: [
-    "☘️","🍀","🌈","💚","🟢","🧢"
+    "☘️", "🍀", "🌈", "💚", "🟢", "🧢"
   ],
 
   pascua: [
-    "🐰","🐣","🐥","🥚","🌷","🌸","🌼",
-    "💐","🌱","🪻","💛","💚","💙","🩷"
+    "🐰", "🐣", "🐥", "🥚", "🌷", "🌸", "🌼",
+    "💐", "🌱", "🪻", "💛", "💚", "💙", "🩷"
   ],
 
   anoNuevo: [
-    "🎆","🎇","✨","🎉","🥳","🎊",
-    "⭐","🌟","💫","🪩","🎈"
+    "🎆", "🎇", "✨", "🎉", "🥳", "🎊",
+    "⭐", "🌟", "💫", "🪩", "🎈"
   ],
 
   invierno: [
-    "❄️","☃️","⛄","🌨️","🌬️","🧣",
-    "🧤","🧥","🥶","🌙","⭐","✨","🤍","💙"
+    "❄️", "☃️", "⛄", "🌨️", "🌬️", "🧣",
+    "🧤", "🧥", "🥶", "🌙", "⭐", "✨", "🤍", "💙"
   ]
 };
 
-// ===============================
-// 📅 PASCUA
-// ===============================
+// ==========================================
+// 🐰 CALCULAR PASCUA
+// ==========================================
 
 function fechaPascua(year) {
 
@@ -139,13 +139,11 @@ function fechaPascua(year) {
   return new Date(year, mes - 1, dia);
 }
 
-// ===============================
-// 📅 TEMPORADA ACTUAL
-// ===============================
+// ==========================================
+// 📅 OBTENER TEMPORADA
+// ==========================================
 
 function obtenerTemporada() {
-
-  const ahora = new Date();
 
   const partes = new Intl.DateTimeFormat(
     "en-US",
@@ -155,7 +153,7 @@ function obtenerTemporada() {
       month: "numeric",
       day: "numeric"
     }
-  ).formatToParts(ahora);
+  ).formatToParts(new Date());
 
   const year = Number(
     partes.find(p => p.type === "year").value
@@ -188,6 +186,7 @@ function obtenerTemporada() {
   const pascua = fechaPascua(year);
 
   const inicioPascua = new Date(pascua);
+
   inicioPascua.setDate(
     pascua.getDate() - 7
   );
@@ -233,13 +232,13 @@ function obtenerTemporada() {
     return "navidad";
   }
 
-  // ❄️ INVIERNO
+  // ❄️ RESTO DEL AÑO
   return "invierno";
 }
 
-// ===============================
+// ==========================================
 // 🎲 EMOJI ALEATORIO
-// ===============================
+// ==========================================
 
 function emojiAleatorio(temporada) {
 
@@ -250,24 +249,23 @@ function emojiAleatorio(temporada) {
   ];
 }
 
-// ===============================
-// 🧹 EMOJIS DEL BOT
-// ===============================
+// ==========================================
+// 🧹 TODOS LOS EMOJIS DEL BOT
+// ==========================================
 
 const todosLosEmojis =
   Object.values(temporadas).flat();
 
-// ===============================
-// 🧹 QUITAR EMOJI ANTERIOR
-// ===============================
+// ==========================================
+// 🧹 QUITAR EMOJI DEL BOT
+// ==========================================
 
 function quitarEmojiAnterior(nombre) {
 
   if (!nombre) return nombre;
 
-  const partes = nombre
-    .trim()
-    .split(" ");
+  const partes =
+    nombre.trim().split(" ");
 
   if (
     todosLosEmojis.includes(partes[0])
@@ -278,9 +276,9 @@ function quitarEmojiAnterior(nombre) {
   return partes.join(" ").trim();
 }
 
-// ===============================
+// ==========================================
 // 🎨 PONER EMOJI
-// ===============================
+// ==========================================
 
 async function ponerEmoji(
   member,
@@ -289,7 +287,7 @@ async function ponerEmoji(
 
   if (member.user.bot) return;
 
-  // 👑 NO TOCAR AL DUEÑO
+  // 👑 NO MODIFICAR AL DUEÑO
   if (
     member.guild.ownerId === member.id
   ) {
@@ -338,9 +336,9 @@ async function ponerEmoji(
   }
 }
 
-// ===============================
-// 🎨 REPARTIR
-// ===============================
+// ==========================================
+// 🎨 REPARTIR TEMPORADA
+// ==========================================
 
 async function repartirTemporada(
   guild,
@@ -369,9 +367,9 @@ async function repartirTemporada(
   );
 }
 
-// ===============================
-// 🧹 LIMPIAR
-// ===============================
+// ==========================================
+// 🧹 LIMPIAR EMOJIS
+// ==========================================
 
 async function limpiarEmojis(guild) {
 
@@ -405,6 +403,7 @@ async function limpiarEmojis(guild) {
     const nombreLimpio =
       quitarEmojiAnterior(nombreActual);
 
+    // No tenía emoji del bot
     if (
       nombreActual === nombreLimpio
     ) {
@@ -435,9 +434,9 @@ async function limpiarEmojis(guild) {
   );
 }
 
-// ===============================
-// 🚀 BOT LISTO
-// ===============================
+// ==========================================
+// 🚀 EJECUTAR UNA SOLA VEZ
+// ==========================================
 
 client.once("ready", async () => {
 
@@ -449,17 +448,17 @@ client.once("ready", async () => {
     obtenerTemporada();
 
   console.log(
-    `📅 Temporada actual: ${temporadaActual}`
+    `📅 Temporada detectada: ${temporadaActual}`
   );
 
-  // ===============================
-  // 🆕 PRIMERA VEZ
-  // ===============================
+  // ========================================
+  // 🆕 PRIMERA EJECUCIÓN
+  // ========================================
 
   if (!memoria.temporada) {
 
     console.log(
-      `🆕 Primera ejecución. Activando ${temporadaActual}.`
+      `🆕 Primera ejecución.`
     );
 
     memoria.temporada =
@@ -479,12 +478,16 @@ client.once("ready", async () => {
       );
     }
 
-    return;
+    console.log(
+      "💾 Memoria guardada."
+    );
+
+    process.exit(0);
   }
 
-  // ===============================
+  // ========================================
   // 🔄 CAMBIÓ LA TEMPORADA
-  // ===============================
+  // ========================================
 
   if (
     memoria.temporada !==
@@ -492,10 +495,10 @@ client.once("ready", async () => {
   ) {
 
     console.log(
-      `🔄 Cambio: ${memoria.temporada} → ${temporadaActual}`
+      `🔄 Cambio de ${memoria.temporada} → ${temporadaActual}`
     );
 
-    // 🧹 Primero limpia la anterior
+    // 🧹 QUITAR TEMPORADA ANTERIOR
     for (
       const guild of client.guilds.cache.values()
     ) {
@@ -503,7 +506,7 @@ client.once("ready", async () => {
       await limpiarEmojis(guild);
     }
 
-    // 🎨 Guarda la nueva
+    // 💾 GUARDAR NUEVA TEMPORADA
     memoria.temporada =
       temporadaActual;
 
@@ -511,7 +514,7 @@ client.once("ready", async () => {
 
     guardarMemoria();
 
-    // 🎨 Reparte la nueva
+    // 🎨 REPARTIR NUEVA TEMPORADA
     for (
       const guild of client.guilds.cache.values()
     ) {
@@ -522,21 +525,31 @@ client.once("ready", async () => {
       );
     }
 
-    return;
+    console.log(
+      "💾 Nueva temporada guardada."
+    );
+
+    process.exit(0);
   }
 
-  // ===============================
-  // 🔁 MISMA TEMPORADA
-  // ===============================
+  // ========================================
+  // ⏸️ MISMA TEMPORADA
+  // ========================================
 
   console.log(
-    `⏸️ ${temporadaActual} ya está activa. No se vuelve a repartir.`
+    `⏸️ ${temporadaActual} ya está activa.`
   );
+
+  console.log(
+    "No se harán cambios."
+  );
+
+  process.exit(0);
 });
 
-// ===============================
-// 👤 NUEVO MIEMBRO
-// ===============================
+// ==========================================
+// 👤 NUEVOS MIEMBROS
+// ==========================================
 
 client.on(
   "guildMemberAdd",
@@ -545,9 +558,6 @@ client.on(
     const temporadaActual =
       obtenerTemporada();
 
-    // Solo recibe emoji si estamos
-    // dentro de una temporada activa
-
     if (
       memoria.temporada ===
       temporadaActual &&
@@ -555,7 +565,7 @@ client.on(
     ) {
 
       console.log(
-        `👤 Nuevo miembro: ${member.user.username}`
+        `👤 ${member.user.username} entró durante ${temporadaActual}.`
       );
 
       await ponerEmoji(
@@ -566,9 +576,9 @@ client.on(
   }
 );
 
-// ===============================
+// ==========================================
 // 🔐 LOGIN
-// ===============================
+// ==========================================
 
 client.login(
   process.env.DISCORD_TOKEN
