@@ -3,13 +3,19 @@ name: Bloodline Seasons
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Descargar repositorio
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
@@ -23,3 +29,17 @@ jobs:
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN1 }}
         run: node bot.js
+
+      - name: Guardar memoria de temporada
+        run: |
+          git config user.name "Bloodline Seasons Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add temporada.json
+
+          if git diff --cached --quiet; then
+            echo "No hay cambios en la memoria."
+          else
+            git commit -m "Actualizar memoria de temporada"
+            git push
+          fi
