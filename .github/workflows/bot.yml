@@ -34,7 +34,7 @@ jobs:
 
       - name: Ejecutar bot
         env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN1 }}
+          DISCORD_TOKEN1: ${{ secrets.DISCORD_TOKEN1 }}
         run: node bot.js
 
       - name: Guardar memoria de temporada
