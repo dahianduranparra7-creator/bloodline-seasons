@@ -149,12 +149,16 @@ function fechaPascua(year) {
   const e = b % 4;
   const f = Math.floor((b + 8) / 25);
   const g = Math.floor((b - f + 1) / 3);
+
   const h =
     (19 * a + b - d - g + 15) % 30;
+
   const i = Math.floor(c / 4);
   const k = c % 4;
+
   const l =
     (32 + 2 * e + 2 * i - h - k) % 7;
+
   const m =
     Math.floor((a + 11 * h + 22 * l) / 451);
 
@@ -200,25 +204,34 @@ function obtenerTemporada() {
     partes.find(p => p.type === "day").value
   );
 
+
   /* Año Nuevo */
+
   if (month === 1 && day <= 7) {
     return "anoNuevo";
   }
 
+
   /* San Valentín */
+
   if (month === 2 && day >= 8 && day <= 14) {
     return "sanValentin";
   }
 
+
   /* San Patricio */
+
   if (month === 3 && day >= 15 && day <= 17) {
     return "sanPatricio";
   }
 
+
   /* Pascua */
+
   const pascua = fechaPascua(year);
 
   const inicioPascua = new Date(pascua);
+
   inicioPascua.setUTCDate(
     inicioPascua.getUTCDate() - 7
   );
@@ -234,7 +247,9 @@ function obtenerTemporada() {
     return "pascua";
   }
 
+
   /* Primavera */
+
   if (
     (month === 3 && day >= 18) ||
     month === 4 ||
@@ -243,7 +258,9 @@ function obtenerTemporada() {
     return "primavera";
   }
 
+
   /* Verano */
+
   if (
     month === 6 ||
     month === 7 ||
@@ -252,17 +269,27 @@ function obtenerTemporada() {
     return "verano";
   }
 
+
   /* Halloween */
+
   if (month === 10) {
     return "halloween";
   }
 
+
   /* Navidad */
-  if (month === 12 && day >= 1 && day <= 25) {
+
+  if (
+    month === 12 &&
+    day >= 1 &&
+    day <= 25
+  ) {
     return "navidad";
   }
 
+
   /* Invierno */
+
   return "invierno";
 }
 
@@ -273,7 +300,8 @@ function obtenerTemporada() {
 
 function emojiAleatorio(temporada) {
 
-  const lista = temporadas[temporada];
+  const lista =
+    temporadas[temporada];
 
   return lista[
     Math.floor(
@@ -284,7 +312,7 @@ function emojiAleatorio(temporada) {
 
 
 /* =========================================================
-   OBTENER TODOS LOS MIEMBROS
+   TODOS LOS MIEMBROS
    ========================================================= */
 
 async function todosLosMiembros(guild) {
@@ -316,26 +344,40 @@ async function quitarEmojiAnterior(member) {
 
   try {
 
-    let nombre = member.nickname;
+    let nombre =
+      member.nickname;
 
-    const emojis = Object.values(
-      temporadas
-    ).flat();
+    const emojis =
+      Object.values(
+        temporadas
+      ).flat();
 
     for (const emoji of emojis) {
-      if (nombre.startsWith(emoji + " ")) {
-        nombre = nombre.slice(
-          emoji.length + 1
-        );
+
+      if (
+        nombre.startsWith(
+          emoji + " "
+        )
+      ) {
+
+        nombre =
+          nombre.slice(
+            emoji.length + 1
+          );
+
         break;
       }
+
     }
 
-    if (nombre !== member.nickname) {
+    if (
+      nombre !== member.nickname
+    ) {
 
       await member.setNickname(
         nombre
       );
+
     }
 
   } catch (error) {
@@ -344,6 +386,7 @@ async function quitarEmojiAnterior(member) {
       `No se pudo quitar emoji a ${member.user.username}:`,
       error.message
     );
+
   }
 }
 
@@ -364,7 +407,9 @@ async function ponerEmoji(
 
   try {
 
-    await quitarEmojiAnterior(member);
+    await quitarEmojiAnterior(
+      member
+    );
 
     const emoji =
       emojiPersonalizado ||
@@ -377,9 +422,16 @@ async function ponerEmoji(
     let nuevoNombre =
       `${emoji} ${nombreBase}`;
 
-    if (nuevoNombre.length > 32) {
+    if (
+      nuevoNombre.length > 32
+    ) {
+
       nuevoNombre =
-        nuevoNombre.substring(0, 32);
+        nuevoNombre.substring(
+          0,
+          32
+        );
+
     }
 
     await member.setNickname(
@@ -412,7 +464,10 @@ async function repartirTemporada(
   const miembros =
     await todosLosMiembros(guild);
 
-  for (const member of miembros.values()) {
+  for (
+    const member
+    of miembros.values()
+  ) {
 
     await ponerEmoji(
       member,
@@ -420,7 +475,6 @@ async function repartirTemporada(
     );
 
   }
-
 }
 
 
@@ -428,22 +482,28 @@ async function repartirTemporada(
    LIMPIAR EMOJIS
    ========================================================= */
 
-async function limpiarEmojis(guild) {
+async function limpiarEmojis(
+  guild
+) {
 
   const miembros =
     await todosLosMiembros(guild);
 
-  for (const member of miembros.values()) {
+  for (
+    const member
+    of miembros.values()
+  ) {
 
-    await quitarEmojiAnterior(member);
+    await quitarEmojiAnterior(
+      member
+    );
 
   }
-
 }
 
 
 /* =========================================================
-   ANUNCIAR INICIO DE TEMPORADA
+   ANUNCIAR INICIO
    ========================================================= */
 
 async function anunciarInicio(
@@ -457,7 +517,10 @@ async function anunciarInicio(
   const miembros =
     await todosLosMiembros(guild);
 
-  for (const member of miembros.values()) {
+  for (
+    const member
+    of miembros.values()
+  ) {
 
     try {
 
@@ -476,14 +539,12 @@ async function anunciarInicio(
       );
 
     }
-
   }
-
 }
 
 
 /* =========================================================
-   ANUNCIAR FIN DE TEMPORADA
+   ANUNCIAR FIN
    ========================================================= */
 
 async function anunciarFin(
@@ -497,7 +558,10 @@ async function anunciarFin(
   const miembros =
     await todosLosMiembros(guild);
 
-  for (const member of miembros.values()) {
+  for (
+    const member
+    of miembros.values()
+  ) {
 
     try {
 
@@ -514,14 +578,12 @@ async function anunciarFin(
       );
 
     }
-
   }
-
 }
 
 
 /* =========================================================
-   CUANDO ENTRA UN NUEVO MIEMBRO
+   NUEVO MIEMBRO
    ========================================================= */
 
 client.on(
@@ -559,9 +621,7 @@ client.on(
         );
 
       }
-
     }
-
   }
 );
 
@@ -578,7 +638,10 @@ client.on(
       return;
     }
 
-    if (message.content.toLowerCase() !== "!emoji") {
+    if (
+      message.content.toLowerCase()
+      !== "!emoji"
+    ) {
       return;
     }
 
@@ -592,10 +655,12 @@ client.on(
     const temporada =
       obtenerTemporada();
 
-    /* Verificar si ya cambió este miembro */
+
+    /* Ya utilizó su cambio */
 
     if (
-      memoria.cambios[member.id] === temporada
+      memoria.cambios[member.id]
+      === temporada
     ) {
 
       await message.reply(
@@ -607,10 +672,15 @@ client.on(
     }
 
 
-    /* Obtener emoji nuevo */
+    /* Elegir emoji */
 
     const emoji =
-      emojiAleatorio(temporada);
+      emojiAleatorio(
+        temporada
+      );
+
+
+    /* Cambiar emoji */
 
     const resultado =
       await ponerEmoji(
@@ -629,10 +699,11 @@ client.on(
     }
 
 
-    /* Guardar que ya cambió */
+    /* Guardar cambio */
 
-    memoria.cambios[member.id] =
-      temporada;
+    memoria.cambios[
+      member.id
+    ] = temporada;
 
     guardarMemoria();
 
@@ -668,7 +739,7 @@ client.once(
 
 
     /* =====================================================
-       PRIMERA VEZ QUE SE EJECUTA
+       PRIMERA EJECUCIÓN
        ===================================================== */
 
     if (!memoria.temporada) {
@@ -689,7 +760,10 @@ client.once(
       guardarMemoria();
 
 
-      for (const guild of client.guilds.cache.values()) {
+      for (
+        const guild
+        of client.guilds.cache.values()
+      ) {
 
         await repartirTemporada(
           guild,
@@ -712,7 +786,8 @@ client.once(
        ===================================================== */
 
     if (
-      memoria.temporada !== temporadaActual
+      memoria.temporada
+      !== temporadaActual
     ) {
 
       console.log(
@@ -720,9 +795,10 @@ client.once(
       );
 
 
-      for (const guild of client.guilds.cache.values()) {
-
-        /* Avisar que terminó */
+      for (
+        const guild
+        of client.guilds.cache.values()
+      ) {
 
         await anunciarFin(
           guild,
@@ -730,22 +806,16 @@ client.once(
         );
 
 
-        /* Quitar emojis anteriores */
-
         await limpiarEmojis(
           guild
         );
 
-
-        /* Repartir nuevos emojis */
 
         await repartirTemporada(
           guild,
           temporadaActual
         );
 
-
-        /* Avisar nueva temporada */
 
         await anunciarInicio(
           guild,
@@ -754,8 +824,6 @@ client.once(
 
       }
 
-
-      /* Reiniciar los cambios */
 
       memoria.temporada =
         temporadaActual;
